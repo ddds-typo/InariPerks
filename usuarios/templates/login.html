@@ -1,0 +1,36 @@
+{%extends "index.html" %}
+{%block title %}Iniciar Sesion{% endblock %}
+{%block cuerpo %}
+
+<div class="container py-5"></div>
+<div class="container">
+  <form method="post" action="">
+    {% csrf_token %}
+
+    <div class="col-4">
+      {%if messages%}
+        {%for mensaje in messages%}
+          <div class="row">
+            <span class="alert alert-{{mensaje.tags}}">{{mensaje}}</span> &nbsp;
+          </div>
+        {%endfor%}
+      {%endif%}
+    </div>
+
+    <div class="col-4">
+      <div class="row p-2">
+        <input type="text" name="username" placeholder="Nombre de usuario" />
+      </div>
+      <div class="row p-2">
+        <input type="password" name="password" placeholder="Contraseña" />
+      </div>
+    </div>
+
+      <button type="submit" class="btn btn-primary text-white">Iniciar sesion</button>
+      <div class="container py-5"></div>
+      <p>No tienes cuenta? <a href="{%url 'registrar'%}">Registrate</a></p>
+    </div>
+  </form>
+</div>
+
+{%endblock%}

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {%load static%}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{%block title%}Indice - InariPerks{%endblock%}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Agbalumo">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+    .img-altura{
+      height: 100px;
+    }
+        .custom-link {
+            text-decoration: none;
+            color: #FAFAFA;
+            transition: color 0.3s;
+        }
+        .custom-link:hover {
+            color: gray;
+        }
+        .header-link {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s;
+        }
+        .header-link:hover {
+            color: black;
+        }
+
+        .header_color{
+          background-color: #3B9C9C;
+        }
+
+        body{
+          min-height:100%;
+          display:flex;
+          flex-direction: column;
+          font-family:Inter;
+        }
+        html{
+          height:100%;
+        }
+    </style>
+</head>
+
+
+
+<body data-bs-theme="dark">
+
+<header class="container-fluid text-center">
+    <div class="row justify-content-center header_color">
+        <div class="col-md-auto justify-content-center mt-2">
+            <a href="{% url 'index' %}">
+                <img style="height:50px;" src="{% static 'imgs/index_transparente.png' %}" />
+            </a>
+        </div>
+
+        <!-- Conditional block for authenticated user -->
+        {% if user.is_authenticated %}
+        <div class="col-md-auto p-3 text-white">
+            <div class="btn-group header-link">
+                <button type="button" class="btn btn-trasparent dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ user.username }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li> Peso: {{ user.peso }}kg</li>
+                    <li> Altura: {{ user.altura }}cm</li>
+                    <li>
+                        {% if user.genero == 'm' %}
+                        Genero: Masculino
+                        {% else %}
+                        Genero: Femenino
+                        {% endif %}
+                    </li>
+                    <li> Edad: {{ user.edad }} años</li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="{% url 'cerrar_sesion' %}">Cerrar Sesion</a></li>
+                </ul>
+            </div>
+        </div>
+        {% else %}
+        <!-- Conditional block for unauthenticated user -->
+        <div class="col-md-auto p-4 text-white">
+            <a class="header-link" href="{% url 'login' %}">Iniciar Sesion</a>
+        </div>
+        {% endif %}
+
+        <div class="col-md-auto p-4 text-white">
+            <a class="header-link" href="#">Crear Plantilla</a>
+        </div>
+
+        <div class="col-md-auto p-4 text-white">
+            <a class="header-link" href="{% url 'contacto' %}">Contacto</a>
+        </div>
+
+        <div class="dropdown me-1 col-md-auto p-3 header-link">
+          <button type="button" class="btn btn-transparent dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="10,20">
+            Temas
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" onclick="modoClaro()">Claro</a></li>
+            <li><a class="dropdown-item" onclick="modoOscuro()">Oscuro</a></li>
+          </ul>
+        </div>
+    </div>
+</header>
+
+
+{%block cuerpo%}
+<div class="container py-5"></div>
+<main>
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-5 mx-auto align-self-center">
+                <span class="display-1 py-5" style="font-family: Agbalumo">InariPerks</span>
+                <p class="py-2"></p>
+                <p class="lead px-2 py-4">
+                    Explora este extenso catálogo de actividades, comidas, pasatiempos y mucho más para descubrir información detallada sobre valores nutricionales y energía consumida
+                </p>
+            </div>
+            <div class="col-5 mx-auto">
+                <img class="img-fluid" src="{%static '/imgs/index_color.png'%}"/>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container py-5"></div>
+    <div class="container py-5"></div>
+
+
+
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div id="comida" class="col-md-3 py-3 mx-auto border border-3 rounded-5 bg-transparent">
+                <img class="img-fluid img-altura" src="{%static '/imgs/comida.png'%}"/>
+                <h4 class="py-3 mt-4" style="font-family: Agbalumo">
+                    Comida y Nutricion
+                </h4>
+                <p>
+                    Calcula las calorías, vitaminas y más valores nutricionales de cualquier elemento
+                </p>
+            </div>
+            <div id="plantillas" class="col-md-3 py-3 mx-auto border border-3 rounded-5 bg-transparent">
+                <img class="img-fluid img-altura" src="{%static '/imgs/templates.png'%}"/>
+                <h4 class="py-3 mt-4" style="font-family: Agbalumo">
+                    Crear Plantilla
+                </h4>
+                <p>
+                    Crea una plantilla o tabla semanal para organizar tus tareas y comidas
+                </p>
+            </div>
+            <div id="actividades" class="col-md-3 py-3 mx-auto border border-3 rounded-5 bg-transparent">
+                <img class="img-fluid img-altura" src="{%static '/imgs/actividades.png'%}"/>
+                <h4 class="py-3 mt-4" style="font-family: Agbalumo">
+                    Actividades Físicas
+                </h4>
+                <p>
+                    Busca entre todas las actividades registradas para calcular las energías
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="container py-5"></div>
+
+{%endblock%}
+<footer class="mt-auto bg-black justify-content-end justify-content-center">
+    <div class="text-center container-md">
+        <p class=" border-bottom border-2 border-dark py-2 text-light">
+            Datos extraídos de páginas oficiales y científicas, para consultas más específicas acude a un experto
+        </p>
+        <p>
+            <a class="custom-link" href="{%url 'terminos'%}">Términos de uso</a>
+            &nbsp;&nbsp;&nbsp;
+            <a class="custom-link" href="{%url 'privacidad'%}">Políticas de privacidad</a>
+        </p>
+    </div>
+</footer>
+
+<script>
+      function modoClaro(){
+        var element=document.body;
+        element.dataset.bsTheme="light";
+      }
+
+      function modoOscuro(){
+        var element=document.body;
+        element.dataset.bsTheme="dark";
+      }
+
+    document.getElementById('comida').addEventListener('click', function() {
+        window.location.href = "{%url 'nutricion'%}";
+    });
+    document.getElementById('plantillas').addEventListener('click', function() {
+        window.location.href = "#";
+    });
+    document.getElementById('actividades').addEventListener('click', function() {
+        window.location.href = "{%url 'actividades'%}";
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

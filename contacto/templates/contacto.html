@@ -1,0 +1,16 @@
+{%extends "index.html"%}
+
+{%block title%}Contacto{%endblock%}
+
+{%block cuerpo%}
+<div class="container py-5"></div>
+<div class="container-lg">
+<form action="" method="POST">
+  {%csrf_token%}
+  <table>
+    {{formulario.as_table}}
+  </table>
+  <input type="submit" value="Enviar">
+</form>
+</div>
+{%endblock%}

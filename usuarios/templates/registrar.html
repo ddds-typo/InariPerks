@@ -1,0 +1,49 @@
+{%extends "index.html" %}
+{%block title %}Registro{% endblock %}
+{%block cuerpo %}
+
+<div class="container py-5"></div>
+<div class="container">
+  <form method="post" action="">
+    {% csrf_token %}
+
+    <div class="col-4">
+      {%if messages%}
+        {%for mensaje in messages%}
+          <div class="row">
+            <span class="alert alert-{{mensaje.tags}}">{{mensaje}}</span> &nbsp;
+          </div>
+        {%endfor%}
+      {%endif%}
+    </div>
+
+    <div class="col-4">
+      <div class="row p-2">
+        <input type="text" name="username" placeholder="Nombre de usuario" />
+      </div>
+      <div class="row p-2">
+        <input type="password" name="password" placeholder="Contraseña" />
+      </div>
+      <div class="row p-2">
+        <input type="number" name="altura" placeholder="Escriba su altura (en cm)" />
+      </div>
+      <div class="row p-2">
+        <input type="number" name="peso" placeholder="Escriba su peso (en kg)" />
+      </div>
+      <div class="row p-2">
+        <input type="number" name="edad" placeholder="Escriba su edad" />
+      </div>
+      <div class="row p-2">
+        <select class="form-select" name="genero" aria-label="Default select example">
+          <option selected>Elige una opcion</option>
+          <option value="m">Masculino</option>
+          <option value="f">Femenino</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary text-white">Registrate</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

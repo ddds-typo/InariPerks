@@ -1,0 +1,91 @@
+{%extends "index.html"%}
+
+{%block title%}
+Términos de Uso
+{%endblock%}
+
+
+{%block cuerpo%}
+<div class="container py-5"></div>
+
+<div class="container">
+  <h1>En esta sección documentaré la memoria.</h1>
+    <br />
+    Semana del 2 al 7:
+    A partir de aquí ya me he aclarado las ideas del proyecto, ya sé cómo llevarlo a cabo y ya he aprendido a usar la mayoría de herramientas que tenía pensado utilizar (Django y Bootstrap).
+    <div class="container py-4"></div>
+
+    Semana del 8 al 14:
+    En esta semana creé la plantilla base del proyecto Django y recopilé los datos de las bases de datos, tanto de actividades como de la lista de comidas.
+    <div class="container py-1"></div>
+    Primero empecé por hacer web scraping de ciertas tablas de la Wikipedia utilizando la extensión de Chrome, y una vez obtenidos los datos scrapeados, los limpié y los apliqué a una tabla que utilizaría en mi proyecto usando la librería pandas de Python. Sin embargo, de esta forma no podía obtener los datos de todos los alimentos existentes (porque estaba recopilando información para la parte de alimentos). Así que opté por otra opción, irme a las referencias de la Wikipedia para obtener los datos originales que usa la wiki y me topé con una página del gobierno estadounidense (https://fdc.nal.usda.gov/), la cual tiene almacenada información sobre miles de alimentos. Ese es el origen de los datos que tengo en mi sección de nutrición.
+
+    <div class="container py-1"></div>
+    Pero para los datos de la parte de actividades sí que tuve que escribir a mano cada actividad, porque tuve que recopilar de varias páginas. Leí páginas oficiales de ciencias y biología para desarrollar un algoritmo que, mediante una constante que averigüé de cada actividad registrada, puedo calcular cuántas calorías quema y cuántos julios utiliza para realizar x actividad en y tiempo. Por eso, en mi tabla de actividades, tengo el nombre de la actividad, julios y eet, que hace referencia a la constante de la actividad (ee) por tiempo en minutos (t). Es como la constante pi o la constante e de las matemáticas.
+    <div class="container py-1"></div>
+    Esto parece tomar poco tiempo en hacerse, pero la recopilación de datos fue una tarea de prueba y error, y no pude hacerlo de forma lineal sin errores en el proceso.
+
+    <div class="container py-4"></div>
+
+    El 17 aprendí a utilizar Bootstrap, especialmente a manejarme con él, y apliqué diseño con Bootstrap a casi todas las páginas que utilizo. Realicé el diseño desde cero de la página inicial, la cual es la que heredan todas las subpáginas.
+
+    <div class="container py-4"></div>
+
+    El 18 y 19 estuve trabajando en toda la parte del registro y login. Tuve ciertas complicaciones porque el registro por defecto de Django no me servía, ya que necesitaba en cada usuario los datos de altura, peso y género. Por lo cual, tuve que crear desde cero una tabla de administración para los usuarios. A partir de ahí, programé las autenticaciones y otras necesidades relacionadas con el registro y login.
+    <div class="container py-1"></div>
+    El registro es un registro cualquiera en el que se introducen en un formulario HTML: nombre, contraseña y 3 campos adicionales míos. Al pulsar en el botón enviar, se guardan los datos en la tabla de usuarios de Django.
+    <div class="container py-1"></div>
+    Django tiene varios módulos que realizan el registro, autenticación y la implementación del nuevo usuario en la base de datos por sí solo. Sin embargo, como yo necesitaba recopilar más datos, tuve que hacer yo el registro, autenticación e implementación en una tabla especializada por mi cuenta. Para ello, tuve que modificar el modelo User que viene por defecto en Django, añadiendo los campos que necesito.
+    <div class="container py-1"></div>
+    En la cabecera tengo una sección que muestra "Iniciar Sesión". Esto es porque si el usuario aún no se ha registrado o iniciado sesión, verá eso. Si el usuario está registrado e inició sesión, verá su nombre en lugar de "Iniciar Sesión", lo que podrá desplegar para ver los detalles de su usuario y un botón de cerrar sesión. Si el usuario no ha iniciado sesión y hace clic en esa opción, lo llevará al HTML de login. El login solo pide nombre y contraseña. Abajo, hay un párrafo que lleva a la URL de registro. El registro comprueba automáticamente si el nuevo registro tiene un nombre igual a otro usuario. La contraseña todavía no tiene ningún tipo de validación.
+    <div class="container py-1"></div>
+    Una vez que un usuario se registra, automáticamente se loguea con los datos introducidos en el formulario y es autenticado. Este login, así como el login del formulario de login, utilizan la misma autenticación del módulo django.contrib.auth.authenticate. Esto autentica por nombre de usuario y contraseña.
+    <div class="container py-1"></div>
+    Cada excepción lanza una alerta de Bootstrap.
+    <div class="container py-4"></div>
+
+    La semana del 22 al 28 me dediqué a solucionar algunos bugs y a completar la sección de comidas y nutrición. <br />
+    Bugs solucionados:
+
+    <ul>
+      <li class="m-2">
+        Solucionado el problema de la repetición del mismo mensaje de alerta
+      </li>
+      <li class="m-2">
+        Solucionado el problema de la aparición de los mensajes de alerta al hacer post al formulario
+      </li>
+      <li class="m-2">
+        Arregladas las posiciones y dimensiones de los divs
+      </li>
+    </ul>
+
+    <div class="container py-4"></div>
+
+    Proseguí con la parte de comida y nutrición.
+    <div class="container py-1"></div>
+    La idea que implementé es un buscador "inteligente" que busca por nombre de comida seguido de una unidad en gramos o miligramos. Por ejemplo: "manzana cruda 100 gramos" y buscará en la base de datos por columna nombre "manzana cruda" seguido de sus valores nutricionales multiplicados por 100 gramos. De base, todos los datos son por cada 100 gramos. Entonces, la conversión varía un poco como se puede ver en la función implementada en views.py.
+    <div class="container py-1"></div>
+    De modo que el usuario busca el nombre de la comida. Si el nombre es muy general, por defecto la vista hace una búsqueda tipo query de SQL pero con Django usando el operador 'LIKE', que en este caso la función en Django es modelo.objects.filter([Nombre columna]__icontains=[input a buscar]). En la página aparecerá la primera opción que resulte del filtro mencionado anteriormente. En un div más abajo aparece una unordered list si en el filtro anterior aparece más de un resultado. Aparecerá un list item con una etiqueta a dentro que contiene la URL de la vista nutrición seguido de la ID de la comida, y el usuario solo verá un enlace con el nombre, ya que la función vista contiene como parámetro opcional la ID.
+    <div class="container py-1"></div>
+    Al pulsar en el enlace llevará a una URL programada en urls.py que tiene la siguiente estructura: nutricion/[id], que simulará una búsqueda tipo SELECT * FROM modelo WHERE id=id, pero usando la nomenclatura de modelos de Django. Usa la misma vista que nutricion/ a secas y lo codifiqué para que el método POST funcione de igual forma y el usuario pueda seguir buscando infinitamente.
+    <div class="container py-1"></div>
+    Este es el funcionamiento de la vista:<br />
+
+    <ul>
+  <li class="m-2">
+    Primero tengo que hacer un regex separando el nombre de la comida que busca el usuario y la cantidad y unidad que el usuario ha escrito. Por ejemplo: Manzana cruda 100 gramos. La función separar_nombre_unidad separará "manzana cruda" y "100 gramos" y los meterá en un diccionario: "Nombre comida" y "Cantidad" serán las claves del diccionario que retorna. La función implementa condiciones si el usuario ha introducido unidades que el programa no validará. Tampoco permitirá que el usuario escriba la cantidad y la unidad juntas (por ejemplo: 100gramos) porque dentro de la función utilizo .split(" "), es decir, separo en arrays por espacio. Si el usuario no introdujo ninguna cantidad y unidad, el programa reconocerá por defecto que la cantidad será 100 gramos.
+  </li>
+  <li class="m-2">
+    Después hago los filtros. Se podrá ver en el código que reescribo de diccionario en diccionario varias veces. Esto es porque necesito los valores de los diccionarios de una forma específica para poder hacer conversiones. Cabe resaltar que el diccionario original simplemente tiene como clave los nombres de la cabecera del modelo/tabla de la base de datos y los valores son los valores de la primera entrada que hace el filtro. Para la conversión necesito todos los campos salvo "id" y "Nombre". Hay algunos casos en los que en la base de datos algunos campos tienen como valor "nulo", esto es porque originalmente en el Excel que importé a SQL estaban vacíos. Esto me dio muchos problemas así que esos valores vacíos los reemplacé por "nulo" creando un programa usando la librería pandas, de esta forma en la vista puedo hacer un diccionario con nuevos valores y claves que omita los que tengan de valor "nulo" (incluso hará una vista de resultados más dinámica).
+  </li>
+  <li class="m-2">
+    Una vez tengo el diccionario con los datos que necesito para las conversiones. Se emplea la función convertir_entrada_lista. Esta función recoge por parámetros la cantidad que se obtuvo de separar_nombre_unidad y los valores del diccionario depurado. Según qué cantidad haya sido pasada hará una conversión bien calculada que devolverá el número operado seguido de la unidad que tiene originalmente en la base de datos, es decir, como en la base de datos cada valor nutricional viene seguido de una cantidad seguido de una unidad (por ejemplo: 100 kcal, 25 gramos...), cambiará el valor numérico por defecto de la base de datos por el valor convertido según el parámetro introducido por el usuario en la búsqueda, ya que el tipo de valor inicial (de la base de datos) y final (el convertido en la función) son de tipo string y solo cambiaría el número.
+  </li>
+</ul>
+<div class="container py-4"></div>
+
+
+
+</div>
+
+{%endblock%}

@@ -1,0 +1,72 @@
+{% extends "index.html" %}
+
+{% block title %}
+Comida y Nutrición
+{% endblock %}
+
+{% block cuerpo %}
+<div class="container-fluid bg-secondary mb-5 py-2 px-5">
+  La base de datos desafortunadamente esta en ingles, para buscar cada
+  comida tendra que ser introducida en ingles, pero la unidad de la cantidad
+  que quieres buscar puede ser en ingles o español. ej: gramos, grams...
+  <br />
+  El buscador es muy simple. Busca por el nombre seguido de una cantidad en
+  gramos o miligramos segun tu preferencia. Ejemplo: raw apple 100 grams
+</div>
+<div class="container-lg">
+  <div class="container-md">
+    <form method="post" action="">
+      {% csrf_token %}
+        <div class="input-group">
+          <input type="search" name="input" class="form-control rounded" placeholder="Buscar. ej: apple raw, 100 grams" aria-label="Search" aria-describedby="search-addon" />
+          <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Buscar</button>
+        </div>
+      </form>
+  </div>
+
+  <div class="container py-4">
+    <div class="col-4">
+      {%if messages%}
+        {%for mensaje in messages%}
+          <div class="row">
+            <span class="alert alert-{{mensaje.tags}}">{{mensaje}}</span> &nbsp;
+          </div>
+        {%endfor%}
+      {%endif%}
+    </div>
+  </div>
+
+{% if resultados %}
+<div class="alert alert-primary mt-2" role="alert">
+  Valores interpretados: {{input_nombre}}. Cantidad: {{input_cantidad}}
+</div>
+<br />
+<h2>Resultados para <span style="font-weight: bold; color: #3B9C9C;">{{nombre_comida}}</span>:</h2>
+
+<table class="table">
+  {% for key, value in tabla.items %}
+  <span>{{id}}</span>
+  <tr>
+    <th>{{ key }}</th>
+    <td>{{ value }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% if resultados|length > 1 %}
+<div class="alert alert-info mt-2 p-2" role="alert">
+  <p>Quizás quisiste decir:</p>
+  <ul>
+    {% for resultado in resultados %}
+    <li><a href="{% url 'nutricion_with_id' resultado.id %}">
+      {{ resultado.Nombre }}
+    </a></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+{% endif %}
+</div>
+
+{% endblock %}
